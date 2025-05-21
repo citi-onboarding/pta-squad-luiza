@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LogoCITiPet, ButtonClose } from "@/assets"
+import "@/styles/fonts.css"
 
 export function ModalRegister() {
   return (
@@ -22,16 +23,16 @@ export function ModalRegister() {
           <img src={ButtonClose.src} alt="Fechar" />
         </button>
       </CardHeader>
-      <CardTitle className="w-[230px] text-center text-base font-normal text-[#101010]"><strong>Cadastro finalizado!</strong> Envie o comprovante para o <strong>tutor</strong></CardTitle>
+      <CardTitle className="w-[230px] text-center text-base font-normal text-[#101010] font-sfpro"><strong>Cadastro finalizado!</strong> Envie o comprovante para o <strong>tutor</strong></CardTitle>
       <CardContent className="w-full p-0">
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col gap-3">
-              <Label htmlFor="email" className="text-base font-bold text-[#101010]">E-mail</Label>
+              <Label htmlFor="email" className="text-base font-bold text-[#101010] font-sfpro">E-mail</Label>
               <Input 
               id="email" 
               placeholder="Digite aqui..."
-              className="w-full h-[50px] p-4 rounded-[8px] border-solid border-[#101010] text-base font-normal placeholder:text-base placeholder:font-normal placeholder:text-[#d9d9d9]" 
+              className="w-full h-[50px] p-4 rounded-[8px] border-solid border-[#101010] text-base font-normal placeholder:text-base placeholder:font-normal placeholder:text-[#d9d9d9] placeholder:font-sfpro" 
               />
             </div>
           </div>

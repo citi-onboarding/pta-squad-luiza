@@ -60,7 +60,11 @@ module.exports = {
     				'4': 'hsl(var(--chart-4))',
     				'5': 'hsl(var(--chart-5))'
     			}
-    		}
+    		},
+			fontFamily: {
+				sfpro: ['SF Pro Display', 'sans-serif'],
+				sourcecode: ['Source Code Pro', 'monospace'],
+			},
     	}
     },
     plugins: [require("tailwindcss-animate")]
