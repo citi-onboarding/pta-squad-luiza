@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('../assets/fonts/sfProDisplay/SF-Pro-Display-Regular.otf') format('.otf'),
+         url('../assets/fonts/sfProDisplay/SF-Pro-Display-RegularItalic.otf') format('otf');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('../assets/fonts/sourceCodePro/SourceCodePro-VariableFont_wght.ttf') format('.ttf'),
+         url('../assets/fonts/sourceCodePro/SourceCodePro-Italic-VariableFont_wght.ttf') format('ttf');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
