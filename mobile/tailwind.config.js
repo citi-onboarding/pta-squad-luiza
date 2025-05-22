@@ -16,6 +16,8 @@ export default {
         barlowBold: ["Barlow_700Bold"],
         barlowExtraBold: ["Barlow_800ExtraBold"],
         barlowBlack: ["Barlow_900Black"],
+        sfpro: ['SF Pro Display', 'sans-serif'],
+				sourcecode: ['Source Code Pro', 'monospace'],
       },
     },
   },
