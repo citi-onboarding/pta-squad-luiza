@@ -51,7 +51,7 @@ export default function Header({
                 <div>
                     <p>{text3}</p>
                 </div>
-                <div style = {{paddingTop: '3px', paddingBottom: '3px', paddingLeft: '2px', paddingRight: '2px'}}>
+                <div style = {{paddingTop: '0px', paddingBottom: '3px', paddingLeft: '2px', paddingRight: '2px'}}>
                     <Image src = {Favorite} alt = "favorite" style = {{width: '24px', height: '24px'}} />
                 </div>
                 <div>
