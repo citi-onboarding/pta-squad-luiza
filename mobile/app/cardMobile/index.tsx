@@ -10,8 +10,8 @@ const CardMobilePage = () => {
         petName="Buddy"
         ownerName="John Doe"
         doctorName="Dr. Smith"
-        appointmentType="vaccine"
-        appointmentStatus={true}
+        appointmentType="vaccine" // can be "first", "return", "checkup", or "vaccine"
+        appointmentStatus={false} // true when the current time is past the appointment time, false otherwise
         />
     </View>
   );
