@@ -3,5 +3,4 @@ import LogoCITiPet from "./LogoPet.png";
 import ButtonClose from "./ButtonClose.png";
 import Favorite from "./favorite.svg";
 import LogotipoCITi from "./Logotipo CITi 1.svg";
-import ArrowBack from "./ArrowBack.svg";
-export { LogoCITi, LogoCITiPet, ButtonClose, Favorite, LogotipoCITi, ArrowBack };
+export { LogoCITi, LogoCITiPet, ButtonClose, Favorite, LogotipoCITi };
