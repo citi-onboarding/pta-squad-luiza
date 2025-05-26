@@ -1,17 +1,9 @@
 import * as React from "react"
 
-import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { cat, alarmIcon } from "@/assets"
+import Image from "next/image"
 
 type CardWebProps = {
     date: string;
@@ -36,9 +28,11 @@ export function CardWeb(props: CardWebProps) {
         }`}
         >
         <div className="flex flex-col justify-center items-center w-[51px] h-[90px] bg-white/80 rounded px-[6px] py-3 gap-2">
-            <img
-                src={alarmIcon.src}
-                alt="Alarm Icon"
+            <Image
+                src="/img/alarm-icon.svg"
+                alt="Alarm icon"
+                width={20}
+                height={20}
                 className="w-5 h-5 object-contain"
             />
             <p className="text-[14px] leading-[1.1] font-bold font-sfpro text-[#101010]">{props.date}</p>
@@ -49,9 +43,11 @@ export function CardWeb(props: CardWebProps) {
         <p className="text-sm font-normal font-sfpro text-black">{props.doctorName}</p>
         
         <div className="flex flex-col items-center gap-2">
-            <img
-            src={cat.src}
-            alt="Cat Icon"
+            <Image
+            src="/img/cat-image.svg"
+            alt="Pet image"
+            width={69}
+            height={70}
             className="w-[69px] h-[70px] object-contain"
             />
             <p className="w-[108px] p-[6px] rounded-[4px] text-center text-xs font-normal font-sfpro text-nowrap text-[rgba(41,41,41,1)] bg-[rgba(255,255,255,0.8)]">
