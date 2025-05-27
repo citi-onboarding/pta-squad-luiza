@@ -1,12 +1,10 @@
 "use client";
 import React from 'react';
-import { useState } from 'react';
-import { ArrowDown, ButtonClose, LogoCITiPet,  } from '@/assets';
+import { useEffect, useRef } from 'react';
 import "@/styles/fonts.css";
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useRef } from 'react';
 
 
 interface ModalAppointmentProps {
@@ -39,9 +37,21 @@ export default function ModalAppointment({
         <div className='flex flex-col justify-center items-center w-[824px] h-[493px] rounded-3xl p-12 gap-[29px] bg-white font-sfpro text-base font-normal'>
             <div className='flex flex-row flex-wrap w-[728px] h-[74px] justify-between items-start'>
                 <div className='w-6 h-6' />
-                <Image src={LogoCITiPet} alt="CITiPet Logo" className="w-[189px] h-[74px] m-0" />
+                <Image
+                src="/img/logo-citi-pet.svg"
+                alt="CITiPet Logo"
+                width={189}
+                height={74}
+                className="w-[189px] h-[74px] m-0"
+                />
                 <button>
-                    <Image src={ButtonClose} alt="Fechar" className='w-6 h-6'/>
+                    <Image
+                    src="/img/button-close-icon.svg"
+                    alt="Close Button"
+                    width={24}
+                    height={24}
+                    className='w-6 h-6'
+                    />
                 </button>
             </div> 
 
@@ -74,7 +84,13 @@ export default function ModalAppointment({
                                     <option value="tipo 4">Check-up</option>
                                 </select>
                                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
-                                    <Image src={ArrowDown} alt="Arrow Down" width={20} height={20} />
+                                    <Image
+                                    src="/img/arrow-down-icon.svg"
+                                    alt="Dropdown Menu Button" 
+                                    width={20} 
+                                    height={20}
+                                    className="w-5 h-5 rotate-180"
+                                    />
                                 </span>
                             </div>
 

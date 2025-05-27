@@ -10,17 +10,28 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { LogoCITiPet, ButtonClose } from "@/assets"
 import "@/styles/fonts.css"
+import Image from "next/image"
 
 export function ModalRegister() {
   return (
     <Card className="flex flex-col justify-center items-center w-[408px] h-[423px] rounded-3xl p-12 gap-[29px] border-none shadow-none bg-white">
       <CardHeader className="flex flex-row w-full p-0 justify-between items-start">
         <div className="w-6 h-6" />
-        <img src={LogoCITiPet.src} alt="CITiPet Logo" className="w-[189px] h-[74px] m-0" />
+        <Image
+        src="/img/logo-citi-pet.svg"
+        alt="CITiPet Logo"
+        width={189}
+        height={74}
+        className="w-[189px] h-[74px] m-0" />
         <button className="w-6 h-6">
-          <img src={ButtonClose.src} alt="Fechar" />
+          <Image
+          src="/img/button-close-icon.svg"
+          alt="Close Button"
+          width={24}
+          height={24}
+          className="w-6 h-6"
+          />
         </button>
       </CardHeader>
       <CardTitle className="w-[230px] text-center text-base font-normal text-[#101010] font-sfpro"><strong>Cadastro finalizado!</strong> Envie o comprovante para o <strong>tutor</strong></CardTitle>

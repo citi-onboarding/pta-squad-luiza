@@ -1,8 +1,6 @@
 "use client";
 import React from 'react';
 import { useState } from 'react';
-import { LogoCITiPet, LogotipoCITi } from '@/assets';
-import { Favorite } from '@/assets';
 import "@/styles/fonts.css";
 import Image from 'next/image';
 
@@ -29,7 +27,13 @@ export default function Header({
     return (
         <div className='flex flex-row flex-wrap items-center justify-between w-full h-[114px] border-b border-[rgba(217,217,217,1)] px-12 font-sfpro text-base font-normal'> 
             <p style = {{display: 'flex', justifyContent: 'flex-start', paddingBottom: '20px', paddingTop: '20px'}} >
-                <Image src = {LogoCITiPet} alt = "logo" />
+                <Image 
+                src="/img/logo-citi-pet.svg"
+                alt = "CITiPet Logo"
+                width={189}
+                height={74}
+                className='w-[189px] h-[74px]'
+                />
             </p>
 
             <div className='flex w-48 h-[42px] gap-12'>
@@ -56,13 +60,25 @@ export default function Header({
                     <p>{text3}</p>
                 </div>
                 <div className='pb-[3px] px-[2px]'>
-                    <Image src = {Favorite} alt = "favorite" className='w-6 h-6' />
+                    <Image
+                    src="/img/favorite-icon.svg"
+                    alt = "Favorite"
+                    width={24}
+                    height={24}
+                    className='w-6 h-6'
+                    />
                 </div>
                 <div>
                     <p>{text4}</p>    
                 </div>
                 <div>
-                    <Image src = {LogotipoCITi} alt = "logotipo" className='w-[41px] h-[21px]' />
+                    <Image 
+                    src="/img/logo-citi-purple.svg"
+                    alt="CITi Logo"
+                    width={41}
+                    height={21}
+                    className='w-[41px] h-[21px]'
+                    />
                 </div>
             </div>
         </div>

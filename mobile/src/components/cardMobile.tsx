@@ -24,7 +24,7 @@ const CardMobile = (props: CardMobileProps) => {
         >
             <View className="flex flex-col justify-center items-center w-[51px] h-[90px] bg-[rgba(255,255,255,0.8)] rounded-[4px] px-[6px] py-3 gap-2">
                 <Image
-                source={require('@assets/alarmIcon.png')}
+                source={require('@assets/alarm-icon.png')}
                 style={{ width: 20, height: 20, resizeMode: 'contain' }}
                 />
                 <Text className="text-[14px] leading-[1.1] font-bold font-sfpro text-[#101010]">{props.date}</Text>
@@ -36,7 +36,7 @@ const CardMobile = (props: CardMobileProps) => {
             </View>
             <View className="flex flex-col items-center gap-2">
                 <Image
-                source={require('@assets/cat.png')}
+                source={require('@assets/cat-image.png')}
                 style={{ width: 57, height: 57, resizeMode: 'contain' }}
                 />
                 <Text className="w-[108px] p-[6px] rounded-[4px] text-center text-xs font-normal font-sfpro text-nowrap text-[rgba(41,41,41,1)] bg-[rgba(255,255,255,0.8)]">
