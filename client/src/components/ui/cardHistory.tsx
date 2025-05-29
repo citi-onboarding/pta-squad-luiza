@@ -9,6 +9,7 @@ type CardHistoryProps = {
     time: string;
     doctorName: string;
     appointmentType: string; // can be "first", "return", "checkup", or "vaccine"
+    onClick?: () => void;
 };
 
 export function CardHistory(props: CardHistoryProps) {
@@ -25,7 +26,7 @@ export function CardHistory(props: CardHistoryProps) {
                 {props.appointmentType === "vaccine" && "Vacinação"}
             </p>
             <p className="text-[14px] leading-[1.1] font-normal font-sfpro text-black">{props.doctorName}</p>
-            <button>
+            <button onClick={props.onClick}>
                 <Image 
                 src="/img/arrow-back-icon.svg"
                 alt="Right arrow button"

@@ -64,6 +64,7 @@ module.exports = {
 			fontFamily: {
 				sfpro: ['SF Pro Display', 'sans-serif'],
 				sourcecode: ['Source Code Pro', 'monospace'],
+				neuehaasgrotesk: ['Neue Haas Grotesk Display Pro', 'sans-serif'],
 			},
 			screens: {
 				'xs': '480px',
