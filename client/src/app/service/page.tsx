@@ -196,6 +196,7 @@ export default function ServicePage() {
                             text3="Data"
                             text4="Horário"
                             onClose={() => setShowModal(false)}
+                            isOpen={showModal}
                         />
                     </div>
                 )}
