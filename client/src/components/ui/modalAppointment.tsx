@@ -11,13 +11,16 @@ interface ModalAppointmentProps {
     text1:string;
     text2:string;
     text3:string;
-    text4:string;}
+    text4:string;
+    onClose: () => void;
+}
 
 export function ModalAppointment({
     text1,
     text2,
     text3,
-    text4
+    text4,
+    onClose
 }:ModalAppointmentProps) {
     const dateInputRef = useRef<HTMLInputElement>(null);
 
@@ -44,7 +47,7 @@ export function ModalAppointment({
                 height={74}
                 className="w-[189px] h-[74px] m-0"
                 />
-                <button>
+                <button onClick={onClose}>
                     <Image
                     src="/img/button-close-icon.svg"
                     alt="Close Button"

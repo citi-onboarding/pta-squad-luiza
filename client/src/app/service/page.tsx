@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Header, Button, CardWeb, Input, DatePicker } from "@/components/ui";
+import { ModalAppointment } from "@/components/ui/modalAppointment";
 import Image from "next/image";
 
 function parseDate(dateStr: string) {
@@ -80,6 +81,7 @@ export default function ServicePage() {
     const [dateTo, setDateTo] = useState<Date | undefined>();
     const [searchInput, setSearchInput] = useState(""); // for input field
     const [searchTerm, setSearchTerm] = useState("");   // for filtering
+    const [showModal, setShowModal] = useState(false);
 
     const handleTabChange = (tab: string) => {
         setIsHistory(tab === 'history');
@@ -156,7 +158,7 @@ export default function ServicePage() {
                         </div>
                     </div>
                     <div
-                        className="grid gap-6 grid-cols-3 max-2xl:grid-cols-2 max-xl:grid-cols-1"
+                        className="grid gap-6 grid-cols-1 2xl:grid-cols-2 4xl:grid-cols-3"
                     >
                         {filteredCards.map(card => (
                             <CardWeb
@@ -172,7 +174,10 @@ export default function ServicePage() {
                         ))}
                     </div>
                 </section>
-                <Button className="fixed right-24 lg:right-48 bottom-[36px] w-[200px] z-50">
+                <Button
+                    className="fixed right-24 lg:right-48 bottom-[36px] w-[200px] z-50"
+                    onClick={() => setShowModal(true)}
+                >
                     <Image
                         src="/img/add-circle-icon.svg"
                         alt="Add Icon"
@@ -183,6 +188,17 @@ export default function ServicePage() {
                     />
                     Nova Consulta
                 </Button>
+                {showModal && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+                        <ModalAppointment
+                            text1="Tipo de consulta"
+                            text2="Médico responsável"
+                            text3="Data"
+                            text4="Horário"
+                            onClose={() => setShowModal(false)}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

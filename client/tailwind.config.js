@@ -65,6 +65,16 @@ module.exports = {
 				sfpro: ['SF Pro Display', 'sans-serif'],
 				sourcecode: ['Source Code Pro', 'monospace'],
 			},
+			screens: {
+				'xs': '480px',
+				'sm': '640px',
+				'md': '768px',
+				'lg': '1024px',
+				'xl': '1280px',
+				'2xl': '1360px',
+				'3xl': '1640px',
+				'4xl': '1860px',
+			}
     	}
     },
     plugins: [require("tailwindcss-animate")]
