@@ -13,7 +13,7 @@ interface ModalAppointmentProps {
     text3:string;
     text4:string;}
 
-export default function ModalAppointment({
+export function ModalAppointment({
     text1,
     text2,
     text3,

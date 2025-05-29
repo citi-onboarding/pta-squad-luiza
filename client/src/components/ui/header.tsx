@@ -11,7 +11,7 @@ interface HeaderProps {
     text4: string; // and </> by
 }
 
-export default function Header({ 
+export function Header({ 
     text1, 
     text2, 
     text3, 
