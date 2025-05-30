@@ -2,12 +2,12 @@
 import React from "react";
 import "@/styles/fonts.css";
 import { Button } from "@/components/ui/button";
-import Header from "@/components/ui/header";
+import { Header } from "@/components/ui/header";
 import { CardHistory } from "@/components/ui/cardHistory";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
-import ModalAppointment from "@/components/ui/modalAppointment";
+import { ModalAppointment } from "@/components/ui/modalAppointment";
 
 function getAppointmentBg(type?: string) {
     switch (type) {

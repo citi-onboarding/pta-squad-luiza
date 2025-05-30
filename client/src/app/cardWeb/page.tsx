@@ -1,4 +1,4 @@
-import {CardWeb} from "@/components/ui/cardWeb";
+import { CardWeb } from "@/components/ui/cardWeb";
 
 export default function CardWebPage() {
   return (

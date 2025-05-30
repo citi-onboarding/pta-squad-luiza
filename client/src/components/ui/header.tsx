@@ -11,7 +11,7 @@ interface HeaderProps {
     text4: string; // and </> by
 }
 
-export default function Header({ 
+export function Header({ 
     text1, 
     text2, 
     text3, 
@@ -25,7 +25,7 @@ export default function Header({
         setIsRegistration(tab === 'registration');
     };
     return (
-        <div className='flex flex-row flex-wrap items-center justify-between w-full h-[114px] border-b border-[rgba(217,217,217,1)] px-12 font-sfpro text-base font-normal'> 
+        <div className='flex flex-row flex-wrap fixed items-center justify-between w-full h-[114px] border-b border-[rgba(217,217,217,1)] bg-white px-12 font-sfpro text-base font-normal'> 
             <p style = {{display: 'flex', justifyContent: 'flex-start', paddingBottom: '20px', paddingTop: '20px'}} >
                 <Image 
                 src="/img/logo-citi-pet.svg"
