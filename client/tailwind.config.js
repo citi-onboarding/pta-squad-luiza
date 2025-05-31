@@ -66,6 +66,16 @@ module.exports = {
 				sourcecode: ['Source Code Pro', 'monospace'],
 				neuehaasgrotesk: ['Neue Haas Grotesk Display Pro', 'sans-serif'],
 			},
+			screens: {
+				'xs': '480px',
+				'sm': '640px',
+				'md': '768px',
+				'lg': '1024px',
+				'xl': '1280px',
+				'2xl': '1360px',
+				'3xl': '1640px',
+				'4xl': '1860px',
+			}
     	}
     },
     plugins: [require("tailwindcss-animate")]

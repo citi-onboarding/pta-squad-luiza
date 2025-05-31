@@ -1,4 +1,4 @@
-import ModalAppointment from "@/components/ui/modalAppointment";
+import { ModalAppointment } from "@/components/ui/modalAppointment";
 
 export default function TestModalAppointment() {
     return (
