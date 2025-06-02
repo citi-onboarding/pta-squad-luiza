@@ -3,6 +3,9 @@ import React from 'react';
 import { useState } from 'react';
 import "@/styles/fonts.css";
 import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
+import Register from '@/app/Register/page';
+import ServicePage from '@/app/serviceAppointment/page';
 
 interface HeaderProps {
     text1: string; // Atendimento
@@ -17,13 +20,17 @@ export function Header({
     text3, 
     text4 
 }: HeaderProps) {
-    const [isAppointment, setIsAppointment] = useState(true);
-    const [isRegistration, setIsRegistration] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
 
-    const handleTabChange = (tab:string) => {
-        setIsAppointment(tab === 'appointment');
-        setIsRegistration(tab === 'registration');
+    const handleAppointmentClick = () => {
+        router.push('/serviceAppointment');
     };
+    
+    const handleRegistrationClick = () => {
+        router.push('/Register');
+    };
+
     return (
         <div className='flex lg:flex-row flex-col flex-wrap fixed items-center lg:justify-between justify-around w-full h-[114px] border-b border-[rgba(217,217,217,1)] bg-white px-12 font-sfpro text-base font-normal'> 
             <p style = {{display: 'flex', justifyContent: 'flex-start', paddingBottom: '20px', paddingTop: '20px'}} >
@@ -38,17 +45,17 @@ export function Header({
 
             <div className='flex w-48 h-[42px] gap-12'>
                 <button
-                    onClick={() => handleTabChange('appointment')}
+                    onClick={handleAppointmentClick}
                     className={`w-auto h-[42px] py-3 border-b-2 ${
-                        isAppointment ? 'border-[#50E678]' : 'border-transparent'
+                    pathname === '/serviceAppointment' ? 'border-[#50E678]' : 'border-transparent'
                     }`}
                 >
                     <p className='text-[#242424]'>{text1}</p>
                 </button>
                 <button 
-                    onClick={() => handleTabChange('registration')}
+                    onClick={handleRegistrationClick}
                     className={`w-auto h-[42px] py-3 border-b-2 ${
-                        isRegistration ? 'border-[#50E678]' : 'border-transparent'
+                    pathname === '/Register' ? 'border-[#50E678]' : 'border-transparent'
                     }`}>
                 
                     <p className='text-[#242424]'>{text2}</p>
