@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Citi, Crud } from "../global";
 
 class PatientController implements Crud {
-    constructor(private readonly citi = new Citi("Patient")) {}
+    constructor(private readonly citi = new Citi("Paciente")) {}
     create = async (request: Request, response: Response) => {
         const { nome, nomeTutor, idade, especie, consultas } = request.body;
         
