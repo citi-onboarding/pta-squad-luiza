@@ -1,15 +1,20 @@
 import { Request, Response } from "express";
 import { Citi, Crud } from "../global";
+import { pacienteSchema } from "../validation/patientValidation";
 
 class PatientController implements Crud {
     constructor(private readonly citi = new Citi("Paciente")) {}
     create = async (request: Request, response: Response) => {
-        const { nome, nomeTutor, idade, especie, consultas } = request.body;
+        const parseResult = pacienteSchema.safeParse(request.body);
+        if (!parseResult.success) {
+            return response.status(400).json({ errors: parseResult.error.errors });
+        }
+        const { nome, nomeTutor, idade, especie, consultas } = parseResult.data;
         
         const isAnyUndefined = this.citi.areValuesUndefined(
+            idade,
             nome,
             nomeTutor,
-            idade, 
             especie
         );
         if (isAnyUndefined) return response.status(400).send();
