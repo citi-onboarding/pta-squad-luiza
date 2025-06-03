@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Citi, Crud } from "../global";
 
 class AppointmentController implements Crud {
-  constructor(private readonly citi = new Citi("User")) {}
+  constructor(private readonly citi = new Citi("Appointment")) {}
   create = async (request: Request, response: Response) => {
     const { dataHora, tipo, descricao, nomeVeterinario, pacienteId, paciente } = request.body;
 
@@ -15,8 +15,8 @@ class AppointmentController implements Crud {
     );
     if (isAnyUndefined) return response.status(400).send();
 
-    const newUser = { dataHora, tipo, descricao, nomeVeterinario, pacienteId, paciente };
-    const { httpStatus, message } = await this.citi.insertIntoDatabase(newUser);
+    const newAppointment = { dataHora, tipo, descricao, nomeVeterinario, pacienteId, paciente };
+    const { httpStatus, message } = await this.citi.insertIntoDatabase(newAppointment);
 
     return response.status(httpStatus).send({ message });
   };
