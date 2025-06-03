@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { Citi, Crud } from "../global";
 
 class AppointmentController implements Crud {
-  constructor(private readonly citi = new Citi("Appointment")) {}
+  constructor(private readonly citi = new Citi("Consulta")) {}
   create = async (request: Request, response: Response) => {
-    const { dataHora, tipo, descricao, nomeVeterinario, pacienteId, paciente } = request.body;
+    const { dataHora, tipo, descricao, nomeVeterinario, pacienteId } = request.body;
 
     const isAnyUndefined = this.citi.areValuesUndefined(
       dataHora,
@@ -15,7 +15,7 @@ class AppointmentController implements Crud {
     );
     if (isAnyUndefined) return response.status(400).send();
 
-    const newAppointment = { dataHora, tipo, descricao, nomeVeterinario, pacienteId, paciente };
+    const newAppointment = { dataHora, tipo, descricao, nomeVeterinario, pacienteId };
     const { httpStatus, message } = await this.citi.insertIntoDatabase(newAppointment);
 
     return response.status(httpStatus).send({ message });
@@ -36,6 +36,17 @@ class AppointmentController implements Crud {
     return response.status(httpStatus).send(value);
   };
 
+  filterByVeterinario = async (request: Request, response: Response) => {
+    const { nomeVeterinario } = request.query;
+    if (!nomeVeterinario) {
+      return response.status(400).send({ message: "nomeVeterinario is required" });
+    }
+    
+    const { httpStatus, values } = await this.citi.findByField("nomeVeterinario", String(nomeVeterinario));
+
+    return response.status(httpStatus).send(values);
+  };
+
   delete = async (request: Request, response: Response) => {
     const { id } = request.params;
 
@@ -46,9 +57,9 @@ class AppointmentController implements Crud {
 
   update = async (request: Request, response: Response) => {
     const { id } = request.params;
-    const { dataHora, tipo, descricao, nomeVeterinario, pacienteId, paciente } = request.body;
+    const { dataHora, tipo, descricao, nomeVeterinario, pacienteId } = request.body;
 
-    const updatedValues = { dataHora, tipo, descricao, nomeVeterinario, pacienteId, paciente };
+    const updatedValues = { dataHora, tipo, descricao, nomeVeterinario, pacienteId };
 
     const { httpStatus, messageFromUpdate } = await this.citi.updateValue(
       id,

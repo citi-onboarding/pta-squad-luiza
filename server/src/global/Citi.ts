@@ -141,6 +141,7 @@ export default class Citi<Entity extends ModelNames> {
     }
   }
 
+
   /**
    * Atualiza um registro na entidade do banco de dados com os valores fornecidos.
    *
@@ -211,6 +212,25 @@ export default class Citi<Entity extends ModelNames> {
         httpStatus: 400,
         messageFromDelete: Message.ERROR_AT_DELETE_FROM_DATABASE,
       };
+    }
+  }
+
+  async findByField(field: string, value: string) {
+    try {
+      // Monta o filtro dinamicamente
+      const where = { [field]: value };
+
+      const values = await prisma[
+        this.entity.toLowerCase() as Uncapitalize<Prisma.ModelName>
+        //@ts-expect-error
+      ].findMany({
+        where,
+      });
+
+      return { httpStatus: 200, values };
+    } catch (error) {
+      Terminal.show(Message.ERROR_GETTING_VALUES_FROM_DATABASE);
+      return { httpStatus: 400, values: [] };
     }
   }
 }

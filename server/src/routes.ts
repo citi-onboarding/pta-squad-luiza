@@ -14,5 +14,6 @@ routes.get("/consultas", AppointmentController.get);
 routes.get("/consultas/:id", AppointmentController.getById);
 routes.delete("/consultas/:id", AppointmentController.delete);
 routes.put("/consultas/:id", AppointmentController.update);
+routes.get("/consultas/:nomeVeterinario", AppointmentController.filterByVeterinario);
 
 export default routes;
