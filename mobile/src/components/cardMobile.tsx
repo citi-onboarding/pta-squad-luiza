@@ -14,13 +14,13 @@ type CardMobileProps = {
 const CardMobile = (props: CardMobileProps) => {
     return (
         <View
-        className={`flex flex-row justify-between items-center w-[358px] h-[122px] rounded-2xl px-6 py-4 ${
-            props.appointmentStatus ? "bg-[rgba(240,240,240,1)]" :
-            props.appointmentType === "first" ? "bg-[rgba(191,181,255,1)]" : 
-            props.appointmentType === "return" ? "bg-[rgba(255,100,25,0.6)]" :
-            props.appointmentType === "checkup" ? "bg-[rgba(156,255,149,1)]" :
-            props.appointmentType === "vaccine" ? "bg-[rgba(170,225,255,1)]" : ""
-        }`}
+            className={`flex flex-row justify-between items-center w-full max-w-[400px] min-w-[220px] h-[122px] rounded-2xl px-4 py-4 mb-4 self-center ${
+                props.appointmentStatus ? "bg-[rgba(240,240,240,1)]" :
+                props.appointmentType === "first" ? "bg-[rgba(191,181,255,1)]" : 
+                props.appointmentType === "return" ? "bg-[rgba(255,100,25,0.6)]" :
+                props.appointmentType === "checkup" ? "bg-[rgba(156,255,149,1)]" :
+                props.appointmentType === "vaccine" ? "bg-[rgba(170,225,255,1)]" : ""
+            }`}
         >
             <View className="flex flex-col justify-center items-center w-[51px] h-[90px] bg-[rgba(255,255,255,0.8)] rounded-[4px] px-[6px] py-3 gap-2">
                 <Image
@@ -31,7 +31,7 @@ const CardMobile = (props: CardMobileProps) => {
                 <Text className="text-[14px] leading-[1.1] font-bold font-sfpro text-[#101010]">{props.time}</Text>
             </View>
             <View className="flex flex-col w-auto h-auto gap-3">
-                <Text className="text-sm font-normal font-sfpro text-black"><strong>{props.petName}</strong>/{props.ownerName}</Text>
+                <Text className="text-sm font-normal font-sfpro text-black"><Text style={{ fontWeight: "bold" }}>{props.petName}</Text>/{props.ownerName}</Text>
                 <Text className="text-sm font-normal font-sfpro text-black">{props.doctorName}</Text>
             </View>
             <View className="flex flex-col items-center gap-2">
