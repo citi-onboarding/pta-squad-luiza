@@ -1,24 +1,22 @@
 import { Request, Response } from "express";
 import { Citi, Crud } from "../global";
+import { appointmentSchema } from "../validation/appointmentValidation";
+import { ZodError } from "zod";
+import { Prisma } from "@prisma/client";
 
 class AppointmentController implements Crud {
   constructor(private readonly citi = new Citi("Consulta")) {}
   create = async (request: Request, response: Response) => {
-    const { dataHora, tipo, descricao, nomeVeterinario, pacienteId } = request.body;
-
-    const isAnyUndefined = this.citi.areValuesUndefined(
-      dataHora,
-      tipo,
-      descricao,
-      nomeVeterinario,
-      pacienteId,
-    );
-    if (isAnyUndefined) return response.status(400).send();
-
-    const newAppointment = { dataHora, tipo, descricao, nomeVeterinario, pacienteId };
-    const { httpStatus, message } = await this.citi.insertIntoDatabase(newAppointment);
-
-    return response.status(httpStatus).send({ message });
+    try {
+      const validatedData = appointmentSchema.parse(request.body);
+      const { httpStatus, message } = await this.citi.insertIntoDatabase(validatedData as Prisma.ConsultaUncheckedCreateInput);
+      return response.status(httpStatus).send({ message });
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return response.status(400).json({ errors: error.errors });
+      }
+      return response.status(500).json({ message: "Erro interno do servidor" });
+    }
   };
 
   get = async (request: Request, response: Response) => {
@@ -57,17 +55,19 @@ class AppointmentController implements Crud {
 
   update = async (request: Request, response: Response) => {
     const { id } = request.params;
-    const { dataHora, tipo, descricao, nomeVeterinario, pacienteId } = request.body;
-
-    const updatedValues = { dataHora, tipo, descricao, nomeVeterinario, pacienteId };
-
-    const { httpStatus, messageFromUpdate } = await this.citi.updateValue(
-      id,
-      updatedValues
-    );
-
-    return response.status(httpStatus).send({ messageFromUpdate });
+    try {
+      const validatedData = appointmentSchema.parse(request.body);
+      const { httpStatus, messageFromUpdate } = await this.citi.updateValue(id, validatedData as Prisma.ConsultaUncheckedCreateInput);
+      return response.status(httpStatus).send({ messageFromUpdate });
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return response.status(400).json({ errors: error.errors });
+      }
+      return response.status(500).json({ message: "Erro interno do servidor" });
+    }
   };
+
+  
 }
 
 export default new AppointmentController();
