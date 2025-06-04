@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Citi, Crud } from "../global";
-import { pacienteSchema } from "../validation/patientValidation";
+import { pacienteSchema, pacienteUpdateSchema } from "../validation/patientValidation";
 
 class PatientController implements Crud {
     constructor(private readonly citi = new Citi("Paciente")) {}
@@ -9,17 +9,9 @@ class PatientController implements Crud {
         if (!parseResult.success) {
             return response.status(400).json({ errors: parseResult.error.errors });
         }
-        const { nome, nomeTutor, idade, especie, consultas } = parseResult.data;
-        
-        const isAnyUndefined = this.citi.areValuesUndefined(
-            idade,
-            nome,
-            nomeTutor,
-            especie
-        );
-        if (isAnyUndefined) return response.status(400).send();
+        const { nome, nomeTutor, idade, especie } = parseResult.data;
 
-        const newPatient = { nome, nomeTutor, idade, especie, consultas };
+        const newPatient = { nome, nomeTutor, idade, especie };
         const { httpStatus, message } = await this.citi.insertIntoDatabase(newPatient);
 
         return response.status(httpStatus).send({ message });
@@ -53,9 +45,11 @@ class PatientController implements Crud {
 
     update = async (request: Request, response: Response) => {
         const { id } = request.params;
-        const { nome, nomeTutor, idade, especie, consultas } = request.body;
-
-        const updatedValues = { nome, nomeTutor, idade, especie, consultas };
+        const parseResult = pacienteUpdateSchema.safeParse(request.body);
+        if (!parseResult.success) {
+            return response.status(400).json({ errors: parseResult.error.errors });
+        }
+        const updatedValues = parseResult.data;
 
         const { httpStatus, messageFromUpdate } = await this.citi.updateValue(
             id,

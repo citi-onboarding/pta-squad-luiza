@@ -15,9 +15,8 @@ export const pacienteSchema = z.object({
   nomeTutor: z.string().min(1, "Nome do tutor é obrigatório"),
   idade: z.number().int().nonnegative("Idade deve ser positiva"),
   especie: EspeciePacienteEnum,
-  // consultas is optional on creation, but you can add validation if needed
-  consultas: z.any().optional(),
 });
 
 // For use in controllers:
 export type PacienteInput = z.infer<typeof pacienteSchema>;
+export const pacienteUpdateSchema = pacienteSchema.partial();
