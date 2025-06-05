@@ -39,10 +39,10 @@ export default class Citi<Entity extends ModelNames> {
   /**
    * Verifica se algum dos elementos fornecidos está indefinido.
    *
-   * @param {...string[]} elements - Elementos a serem verificados.
+   * @param {...(string | number | undefined)[]} elements - Elementos a serem verificados.
    * @returns {boolean} Retorna verdadeiro se algum dos elementos estiver indefinido, caso contrário, retorna falso.
    */
-  areValuesUndefined(...elements: string[]): boolean {
+  areValuesUndefined(...elements: (string | number | undefined)[]): boolean {
     const isAnyUndefined = elements.some((element) => {
       return element === undefined;
     });
@@ -141,6 +141,7 @@ export default class Citi<Entity extends ModelNames> {
     }
   }
 
+
   /**
    * Atualiza um registro na entidade do banco de dados com os valores fornecidos.
    *
@@ -211,6 +212,25 @@ export default class Citi<Entity extends ModelNames> {
         httpStatus: 400,
         messageFromDelete: Message.ERROR_AT_DELETE_FROM_DATABASE,
       };
+    }
+  }
+
+  async findByField(field: string, value: string) {
+    try {
+      // Monta o filtro dinamicamente
+      const where = { [field]: value };
+
+      const values = await prisma[
+        this.entity.toLowerCase() as Uncapitalize<Prisma.ModelName>
+        //@ts-expect-error
+      ].findMany({
+        where,
+      });
+
+      return { httpStatus: 200, values };
+    } catch (error) {
+      Terminal.show(Message.ERROR_GETTING_VALUES_FROM_DATABASE);
+      return { httpStatus: 400, values: [] };
     }
   }
 }
