@@ -1,84 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header, Button, CardWeb, Input, DatePicker } from "@/components/ui";
 import { ModalAppointment } from "@/components/ui/modalAppointment";
 import Image from "next/image";
-
-function parseDate(dateStr: string) {
-  const [day, month] = dateStr.split("/").map(Number);
-  return new Date(new Date().getFullYear(), month - 1, day);
-}
-
-// Card data array for easier filtering
-const cardData = [
-  {
-    id: 1,
-    date: "10/06",
-    time: "09:00",
-    petName: "Mimi",
-    ownerName: "João Silva",
-    doctorName: "Dr. Ana Souza",
-    appointmentType: "first",
-    appointmentStatus: false,
-  },
-  {
-    id: 2,
-    date: "11/06",
-    time: "10:30",
-    petName: "Mimi",
-    ownerName: "João Silva",
-    doctorName: "Dr. Gustavo Silva",
-    appointmentType: "return",
-    appointmentStatus: false,
-  },
-  {
-    id: 3,
-    date: "12/06",
-    time: "14:00",
-    petName: "Mimi",
-    ownerName: "João Silva",
-    doctorName: "Dra. Fernanda Lima",
-    appointmentType: "checkup",
-    appointmentStatus: false,
-  },
-  {
-    id: 4,
-    date: "13/06",
-    time: "11:15",
-    petName: "Mimi",
-    ownerName: "João Silva",
-    doctorName: "Dr. Lucas Almeida",
-    appointmentType: "vaccine",
-    appointmentStatus: false,
-  },
-  {
-    id: 5,
-    date: "15/06",
-    time: "13:30",
-    petName: "Mimi",
-    ownerName: "João Silva",
-    doctorName: "Dr. Gustavo Silva",
-    appointmentType: "checkup",
-    appointmentStatus: false,
-  },
-  {
-    id: 6,
-    date: "16/06",
-    time: "15:45",
-    petName: "Mimi",
-    ownerName: "João Silva",
-    doctorName: "Dra. Fernanda Lima",
-    appointmentType: "vaccine",
-    appointmentStatus: false,
-  },
-];
+import { Appointment, getAppointments } from "@/services/Appointments";
 
 export default function ServicePage() {
     const [isHistory, setIsHistory] = useState(true);
     const [isSchedule, setIsSchedule] = useState(false);
     const [dateFrom, setDateFrom] = useState<Date | undefined>();
     const [dateTo, setDateTo] = useState<Date | undefined>();
+    const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [searchInput, setSearchInput] = useState(""); // for input field
     const [searchTerm, setSearchTerm] = useState("");   // for filtering
     const [showModal, setShowModal] = useState(false);
@@ -91,23 +24,47 @@ export default function ServicePage() {
     const handleSearch = () => {
         setSearchTerm(searchInput.trim());
     };
+    
+    useEffect(() => {
+        async function fetchAppointments() {
+            try {
+                const data = await getAppointments();
+                setAppointments(data);
+            } catch (error) {
+                setAppointments([]);
+                console.error("Error fetching appointments:", error);
+            }
+        };
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+        async function fetchPatients() {
+            try {
+                const data = await getPatients();
+                setPatients(data);
+            } catch (error) {
+                setPatients([]);
+                console.error("Error fetching patients:", error);
+            }
+        };
 
-    const filteredCards = cardData.filter(card => {
-        const cardDate = parseDate(card.date);
-        cardDate.setHours(0, 0, 0, 0);
+        fetchAppointments();
+        fetchPatients();
+    }, []);
+    
+    const filteredAppointments = appointments.filter((appointment) => {
+        const dateTimeNow = new Date(Date.now());
+        const dateTime = new Date(appointment.dataHora);
 
         if (isHistory) {
-            if (!(cardDate < today && card.appointmentStatus === true)) return false;
+            if (!(dateTime < dateTimeNow)) return false;
         }
+
         if (isSchedule) {
-            if (!(cardDate >= today && card.appointmentStatus === false)) return false;
+            if (!(dateTime >= dateTimeNow)) return false;
         }
-        if (dateFrom && cardDate < dateFrom) return false;
-        if (dateTo && cardDate > dateTo) return false;
-        if (searchTerm && !card.doctorName.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+
+        if (dateFrom && dateTime < dateFrom) return false;
+        if (dateTo && dateTime > dateTo) return false;
+        if (searchTerm && !appointment.nomeVeterinario.toLowerCase().includes(searchTerm.toLowerCase())) return false;
         return true;
     });
 
@@ -160,16 +117,16 @@ export default function ServicePage() {
                     <div
                         className="grid gap-6 grid-cols-1 2xl:grid-cols-2 4xl:grid-cols-3"
                     >
-                        {filteredCards.map(card => (
+                        {filteredAppointments.map((appointment) => (
                             <CardWeb
-                                key={card.id}
-                                date={card.date}
-                                time={card.time}
-                                petName={card.petName}
-                                ownerName={card.ownerName}
-                                doctorName={card.doctorName}
-                                appointmentType={card.appointmentType}
-                                appointmentStatus={card.appointmentStatus}
+                                key={appointment.id}
+                                date={appointment.dataHora.split("T")[0].slice(5, 10)}
+                                time={appointment.dataHora.split("T")[1].slice(0, 5)}
+                                petName={patient.nome}
+                                ownerName={patient.nomeTutor}
+                                doctorName={appointment.nomeVeterinario}
+                                appointmentType={appointment.tipo}
+                                appointmentStatus={appointment.appointmentStatus}
                             />
                         ))}
                     </div>
