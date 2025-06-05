@@ -39,10 +39,10 @@ export default class Citi<Entity extends ModelNames> {
   /**
    * Verifica se algum dos elementos fornecidos está indefinido.
    *
-   * @param {...string[]} elements - Elementos a serem verificados.
+   * @param {...(string | number | undefined)[]} elements - Elementos a serem verificados.
    * @returns {boolean} Retorna verdadeiro se algum dos elementos estiver indefinido, caso contrário, retorna falso.
    */
-  areValuesUndefined(...elements: string[]): boolean {
+  areValuesUndefined(...elements: (string | number | undefined)[]): boolean {
     const isAnyUndefined = elements.some((element) => {
       return element === undefined;
     });
