@@ -4,6 +4,7 @@ import "@/styles/fonts.css";
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { createAppointment } from '@/services/Appointments';
 
 interface ModalAppointmentProps {
     text1: string;
@@ -55,6 +56,24 @@ export function ModalAppointment({
     if (!isOpen) return null;
 
     const isFormValid = tipo && medico && data && hora;
+
+    const handleSubmit = async () => {
+        setTouched(true);
+        if (!isFormValid) return;
+
+        try {
+            await createAppointment({
+                pacienteId: 123, // Replace with actual patient ID
+                nomeVeterinario: medico,
+                dataHora: `${data}T${hora}`,
+                tipo,
+                descricao: "",
+            });
+            if (onClose) onClose();
+        } catch (error) {
+            console.error("Erro ao cadastrar consulta:", error);
+        }
+    };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center">
@@ -169,10 +188,7 @@ export function ModalAppointment({
                     <Button
                         className='w-[728px] h-[42px] py-3 px-8 g-[10px]'
                         disabled={!isFormValid}
-                        onClick={() => {
-                            setTouched(true);
-                            if (!isFormValid) return;
-                        }}
+                        onClick={handleSubmit}
                     >
                         <p className='text-[rgba(255, 255, 255, 1)] font-[500]'>Finalizar cadastro</p>
                     </Button>

@@ -2,19 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { Header, Button, CardWeb, Input, DatePicker } from "@/components/ui";
-import { ModalAppointment } from "@/components/ui/modalAppointment";
 import Image from "next/image";
 import { Appointment, getAppointments } from "@/services/Appointments";
+import { Patient, getPatients } from "@/services/Patients";
+import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 
 export default function ServicePage() {
+    const router = useRouter();
     const [isHistory, setIsHistory] = useState(true);
     const [isSchedule, setIsSchedule] = useState(false);
-    const [dateFrom, setDateFrom] = useState<Date | undefined>();
     const [dateTo, setDateTo] = useState<Date | undefined>();
+    const [dateFrom, setDateFrom] = useState<Date | undefined>();
     const [appointments, setAppointments] = useState<Appointment[]>([]);
+    const [patients, setPatients] = useState<Patient[]>([]);
     const [searchInput, setSearchInput] = useState(""); // for input field
     const [searchTerm, setSearchTerm] = useState("");   // for filtering
-    const [showModal, setShowModal] = useState(false);
 
     const handleTabChange = (tab: string) => {
         setIsHistory(tab === 'history');
@@ -51,9 +54,10 @@ export default function ServicePage() {
     }, []);
     
     const filteredAppointments = appointments.filter((appointment) => {
-        const dateTimeNow = new Date(Date.now());
+        const dateTimeNow = new Date();
         const dateTime = new Date(appointment.dataHora);
 
+        // Filtering be Tab: History or Schedule
         if (isHistory) {
             if (!(dateTime < dateTimeNow)) return false;
         }
@@ -62,8 +66,11 @@ export default function ServicePage() {
             if (!(dateTime >= dateTimeNow)) return false;
         }
 
+        // Filtering by Date Range
         if (dateFrom && dateTime < dateFrom) return false;
         if (dateTo && dateTime > dateTo) return false;
+
+        // Filtering by Doctor Name
         if (searchTerm && !appointment.nomeVeterinario.toLowerCase().includes(searchTerm.toLowerCase())) return false;
         return true;
     });
@@ -76,7 +83,7 @@ export default function ServicePage() {
                     <p className="font-sourcecode font-bold text-5xl text-black">Atendimento</p>
                     <div className="flex flex-col h-auto gap-6">
                         <p className="font-sfpro font-normal text-2xl text-black">Qual é o médico?</p>
-                        <search className="flex items-center h-auto gap-6">
+                        <div className="flex items-center h-auto gap-6">
                             <Input 
                                 id="doctorName"
                                 value={searchInput}
@@ -94,12 +101,12 @@ export default function ServicePage() {
                             >
                                 Buscar
                             </Button>
-                        </search>
+                        </div>
                     </div>
                 </nav>
                 <section className="flex flex-col w-full items-center gap-8">
                     <div className="flex w-full h-auto justify-between items-center">
-                        <menu className="flex w-max h-[62px] p-2 gap-2 rounded-xl bg-[#f0f0f0]">
+                        <div className="flex w-max h-[62px] p-2 gap-2 rounded-xl bg-[#f0f0f0]">
                             <button className={`w-auto h-[46px] px-4 py-3 rounded-xl font-sfpro text-base text-[#101010] leading-[1.1] ${
                                 isHistory ? 'bg-white' : 'bg-transparent'}`}
                                 onClick={() => handleTabChange('history')}
@@ -108,7 +115,7 @@ export default function ServicePage() {
                                 isSchedule ? 'bg-white' : 'bg-transparent'}`}
                                 onClick={() => handleTabChange('schedule')}
                                 >Agendamento</button>
-                        </menu>
+                        </div>
                         <div className="flex h-full gap-4">
                             <DatePicker onChange={setDateFrom} />
                             <DatePicker onChange={setDateTo} />
@@ -117,23 +124,34 @@ export default function ServicePage() {
                     <div
                         className="grid gap-6 grid-cols-1 2xl:grid-cols-2 4xl:grid-cols-3"
                     >
-                        {filteredAppointments.map((appointment) => (
-                            <CardWeb
-                                key={appointment.id}
-                                date={appointment.dataHora.split("T")[0].slice(5, 10)}
-                                time={appointment.dataHora.split("T")[1].slice(0, 5)}
-                                petName={patient.nome}
-                                ownerName={patient.nomeTutor}
-                                doctorName={appointment.nomeVeterinario}
-                                appointmentType={appointment.tipo}
-                                appointmentStatus={appointment.appointmentStatus}
-                            />
-                        ))}
+                        {filteredAppointments.map((appointment) => {
+                            const patient = patients.find(p => p.id === appointment.pacienteId);
+                            const dateObj = new Date(appointment.dataHora).getTime() + 3*60*60*1000; // Adjusting for timezone
+                            const now = new Date().getTime() + 3*60*60*1000; // Adjusting for timezone
+
+                            return (
+                                <button
+                                    key={appointment.id}
+                                    onClick={() => router.push(`/AppointmentDetails/${patient?.id}/${appointment.id}`)}
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <CardWeb
+                                        date={format(dateObj, "dd/MM")}
+                                        time={format(dateObj, "HH:mm")}
+                                        petName={patient ? patient.nome : "Desconhecido"}
+                                        ownerName={patient ? patient.nomeTutor : "Desconhecido"}
+                                        doctorName={appointment.nomeVeterinario}
+                                        appointmentType={appointment.tipo}
+                                        appointmentStatus={now > dateObj}
+                                    />
+                                </button>
+                            );
+                        })}
                     </div>
                 </section>
                 <Button
                     className="fixed right-24 lg:right-48 bottom-[36px] w-[200px] z-50"
-                    onClick={() => setShowModal(true)}
+                    onClick={() => router.push("/Register")}
                 >
                     <Image
                         src="/img/add-circle-icon.svg"
@@ -145,18 +163,6 @@ export default function ServicePage() {
                     />
                     Nova Consulta
                 </Button>
-                {showModal && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-                        <ModalAppointment
-                            text1="Tipo de consulta"
-                            text2="Médico responsável"
-                            text3="Data"
-                            text4="Horário"
-                            onClose={() => setShowModal(false)}
-                            isOpen={showModal}
-                        />
-                    </div>
-                )}
             </div>
         </div>
     );

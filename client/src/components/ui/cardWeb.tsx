@@ -21,10 +21,10 @@ export function CardWeb(props: CardWebProps) {
      
         className={`flex flex-row justify-between items-center w-[494px] h-[135px] rounded-2xl px-6 py-4 ${
             props.appointmentStatus ? "bg-[rgba(240,240,240,1)]" :
-            props.appointmentType === "first" ? "bg-[rgba(191,181,255,1)]" : 
-            props.appointmentType === "return" ? "bg-[rgba(255,100,25,0.6)]" :
-            props.appointmentType === "checkup" ? "bg-[rgba(156,255,149,1)]" :
-            props.appointmentType === "vaccine" ? "bg-[rgba(170,225,255,1)]" : ""
+            props.appointmentType === "PRIMEIRA" ? "bg-[rgba(191,181,255,1)]" : 
+            props.appointmentType === "RETORNO" ? "bg-[rgba(255,100,25,0.6)]" :
+            props.appointmentType === "AVALIACAO" ? "bg-[rgba(156,255,149,1)]" :
+            props.appointmentType === "VACINA" ? "bg-[rgba(170,225,255,1)]" : ""
         }`}
         >
         <div className="flex flex-col justify-center items-center w-[51px] h-[90px] bg-white/80 rounded px-[6px] py-3 gap-2">
@@ -51,10 +51,10 @@ export function CardWeb(props: CardWebProps) {
             className="w-[69px] h-[70px] object-contain"
             />
             <p className="w-[108px] p-[6px] rounded-[4px] text-center text-xs font-normal font-sfpro text-nowrap text-[rgba(41,41,41,1)] bg-[rgba(255,255,255,0.8)]">
-                {props.appointmentType === "first" && "Primeira Consulta"}
-                {props.appointmentType === "return" && "Retorno"}
-                {props.appointmentType === "checkup" && "Check-up"}
-                {props.appointmentType === "vaccine" && "Vacinação"}
+                {props.appointmentType === "PRIMEIRA" && "Primeira Consulta"}
+                {props.appointmentType === "RETORNO" && "Retorno"}
+                {props.appointmentType === "AVALIACAO" && "Check-up"}
+                {props.appointmentType === "VACINA" && "Vacinação"}
             </p>
         </div>
     </Card>
